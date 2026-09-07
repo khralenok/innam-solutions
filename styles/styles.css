@@ -1,0 +1,76 @@
+
+:root {
+  color-scheme: light;
+
+  /* Sea-teal neutrals: cool undertones across the surface scale. */
+  --color-bg: #FFFFFF;
+  --color-surface: #F5F9F9;
+  --color-surface-raised: #FFFFFF;
+  --color-surface-hover: #EAF2F2;
+  --color-surface-selected: #E1F6F3;
+
+  /* Text */
+  --color-text: #142B2E;
+  --color-text-secondary: #49656A;
+  --color-text-tertiary: #5B7479;
+  --color-text-disabled: #94ACB0;
+
+  /* Borders */
+  --color-border: #D5E3E5;
+  --color-border-strong: #94ACB0;
+
+  /* Brand and interaction */
+  --color-primary: #4CCFC2;
+  --color-primary-hover: #32B9AD;
+  --color-primary-pressed: #299F95;
+  --color-on-primary: #092B2E;
+  --color-accent-subtle: #E1F6F3;
+  --color-accent-text: #116B68;
+  --color-focus-ring: #218B84;
+
+  /* Feedback */
+  --color-success: #23875A;
+  --color-success-subtle: #E4F5EB;
+  --color-warning: #A86508;
+  --color-warning-subtle: #FFF3D9;
+  --color-danger: #D94B55;
+  --color-danger-subtle: #FDECEE;
+  --color-info: #2563C5;
+  --color-info-subtle: #E9F1FF;
+}
+
+/* Deep ocean surfaces retain their blue-teal hue as they darken. */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-bg: #0D1B20;
+  --color-surface: #13272D;
+  --color-surface-raised: #1A333A;
+  --color-surface-hover: #203D44;
+  --color-surface-selected: #17443F;
+
+  --color-text: #EAF5F6;
+  --color-text-secondary: #A6BEC2;
+  --color-text-tertiary: #7F9FA5;
+  --color-text-disabled: #607E85;
+
+  --color-border: #304D55;
+  --color-border-strong: #49656A;
+
+  --color-primary: #4CCFC2;
+  --color-primary-hover: #70DED3;
+  --color-primary-pressed: #32B9AD;
+  --color-on-primary: #092B2E;
+  --color-accent-subtle: #17443F;
+  --color-accent-text: #82E5DA;
+  --color-focus-ring: #70DED3;
+
+  --color-success: #65D6A0;
+  --color-success-subtle: #1D3B2B;
+  --color-warning: #E7B45D;
+  --color-warning-subtle: #3D3020;
+  --color-danger: #FF7B83;
+  --color-danger-subtle: #44252B;
+  --color-info: #83B5FF;
+  --color-info-subtle: #22344F;
+}
