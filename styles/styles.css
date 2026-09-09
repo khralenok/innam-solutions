@@ -1,76 +1,94 @@
-
 :root {
   color-scheme: light;
 
-  /* Sea-teal neutrals: cool undertones across the surface scale. */
-  --color-bg: #FFFFFF;
-  --color-surface: #F5F9F9;
+  /* Brand palette: shared by both themes. */
+  --fern: #588841ff;
+  --sage-green: #7DAE77ff;
+  --apricot-cream: #F9C480ff;
+  --apricot-cream-2: #F6D393ff;
+
+  /* Warm, botanical neutrals. */
+  --color-bg: #FDFCF8;
+  --color-surface: #F3F4ED;
   --color-surface-raised: #FFFFFF;
-  --color-surface-hover: #EAF2F2;
-  --color-surface-selected: #E1F6F3;
+  --color-surface-hover: #E8EDDF;
+  --color-surface-selected: #E5EFDF;
 
-  /* Text */
-  --color-text: #142B2E;
-  --color-text-secondary: #49656A;
-  --color-text-tertiary: #5B7479;
-  --color-text-disabled: #94ACB0;
+  --color-text: #20291D;
+  --color-text-secondary: #515E49;
+  --color-text-tertiary: #66715D;
+  --color-text-disabled: #9AA38F;
 
-  /* Borders */
-  --color-border: #D5E3E5;
-  --color-border-strong: #94ACB0;
+  --color-border: #D9DFCF;
+  --color-border-strong: #87947A;
 
-  /* Brand and interaction */
-  --color-primary: #4CCFC2;
-  --color-primary-hover: #32B9AD;
-  --color-primary-pressed: #299F95;
-  --color-on-primary: #092B2E;
-  --color-accent-subtle: #E1F6F3;
-  --color-accent-text: #116B68;
-  --color-focus-ring: #218B84;
+  /* Sage actions; fern-derived text and focus colors. */
+  --color-primary: var(--sage-green);
+  --color-primary-hover: #8DBB84;
+  --color-primary-pressed: #719F64;
+  --color-on-primary: #172211;
+  --color-accent-subtle: #E5EFDF;
+  --color-accent-text: #426B32;
+  --color-focus-ring: var(--fern);
 
-  /* Feedback */
-  --color-success: #23875A;
-  --color-success-subtle: #E4F5EB;
-  --color-warning: #A86508;
-  --color-warning-subtle: #FFF3D9;
-  --color-danger: #D94B55;
-  --color-danger-subtle: #FDECEE;
-  --color-info: #2563C5;
-  --color-info-subtle: #E9F1FF;
+  /* Apricot accents complement the greens without implying a warning. */
+  --color-secondary: var(--apricot-cream);
+  --color-secondary-hover: var(--apricot-cream-2);
+  --color-on-secondary: #49351C;
+  --color-secondary-subtle: #FCF0DC;
+  --color-secondary-text: #795024;
+
+  /* Feedback remains distinct from decorative accents. */
+  --color-success: #416E37;
+  --color-success-subtle: #E8F1E2;
+  --color-warning: #855311;
+  --color-warning-subtle: #FFF0D4;
+  --color-danger: #AE4141;
+  --color-danger-subtle: #FBEAE5;
+  --color-info: #3D647A;
+  --color-info-subtle: #E8F0F2;
+
+  --color-photo-overlay: #1F2A18;
 }
 
-/* Deep ocean surfaces retain their blue-teal hue as they darken. */
 [data-theme="dark"] {
   color-scheme: dark;
 
-  --color-bg: #0D1B20;
-  --color-surface: #13272D;
-  --color-surface-raised: #1A333A;
-  --color-surface-hover: #203D44;
-  --color-surface-selected: #17443F;
+  /* Soft charcoal with muted botanical undertones. */
+  --color-bg: #171B15;
+  --color-surface: #20261D;
+  --color-surface-raised: #2A3225;
+  --color-surface-hover: #343F2D;
+  --color-surface-selected: #30442A;
 
-  --color-text: #EAF5F6;
-  --color-text-secondary: #A6BEC2;
-  --color-text-tertiary: #7F9FA5;
-  --color-text-disabled: #607E85;
+  --color-text: #F3F3E9;
+  --color-text-secondary: #C0C9B5;
+  --color-text-tertiary: #A0AE94;
+  --color-text-disabled: #738168;
 
-  --color-border: #304D55;
-  --color-border-strong: #49656A;
+  --color-border: #3D4935;
+  --color-border-strong: #7C8D70;
 
-  --color-primary: #4CCFC2;
-  --color-primary-hover: #70DED3;
-  --color-primary-pressed: #32B9AD;
-  --color-on-primary: #092B2E;
-  --color-accent-subtle: #17443F;
-  --color-accent-text: #82E5DA;
-  --color-focus-ring: #70DED3;
+  --color-primary: var(--sage-green);
+  --color-primary-hover: #96BF8A;
+  --color-primary-pressed: #719F64;
+  --color-on-primary: #172211;
+  --color-accent-subtle: #30442A;
+  --color-accent-text: #A3CD94;
+  --color-focus-ring: var(--sage-green);
 
-  --color-success: #65D6A0;
-  --color-success-subtle: #1D3B2B;
-  --color-warning: #E7B45D;
-  --color-warning-subtle: #3D3020;
-  --color-danger: #FF7B83;
-  --color-danger-subtle: #44252B;
-  --color-info: #83B5FF;
-  --color-info-subtle: #22344F;
+  --color-secondary: var(--apricot-cream);
+  --color-secondary-hover: var(--apricot-cream-2);
+  --color-on-secondary: #49351C;
+  --color-secondary-subtle: #3E3222;
+  --color-secondary-text: var(--apricot-cream-2);
+
+  --color-success: #A3CD94;
+  --color-success-subtle: #2D3E26;
+  --color-warning: var(--apricot-cream);
+  --color-warning-subtle: #44331D;
+  --color-danger: #F29C90;
+  --color-danger-subtle: #452A26;
+  --color-info: #A3C5D5;
+  --color-info-subtle: #263941;
 }

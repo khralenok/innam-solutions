@@ -5,6 +5,7 @@ try { explicitTheme = ['light', 'dark'].includes(localStorage.getItem('innam-the
 
 function applyTheme(theme) {
   document.documentElement.dataset.theme = theme;
+  updatePalette();
   const dark = theme === 'dark';
   themeButton.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
   themeButton.title = themeButton.getAttribute('aria-label');
@@ -22,43 +23,6 @@ systemTheme.addEventListener('change', event => {
 });
 document.querySelector('#year').textContent = new Date().getFullYear();
 
-// Keep native details semantics and keyboard support; animate both directions.
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-document.querySelectorAll('.faq-list details').forEach(details => {
-  const summary = details.querySelector('summary');
-  const answer = details.querySelector('.faq-answer');
-  let animation;
-  let expanded = details.open;
-  summary.addEventListener('click', event => {
-    if (reducedMotion.matches || typeof details.animate !== 'function') return;
-    event.preventDefault();
-    const from = details.getBoundingClientRect().height;
-    expanded = animation ? !expanded : !details.open;
-    if (animation) animation.cancel();
-    details.open = true;
-    details.style.overflow = 'hidden';
-    const border = parseFloat(getComputedStyle(details).borderTopWidth) + parseFloat(getComputedStyle(details).borderBottomWidth);
-    const to = summary.getBoundingClientRect().height + border + (expanded ? answer.getBoundingClientRect().height : 0);
-    animation = details.animate(
-      { height: [`${from}px`, `${to}px`] },
-      { duration: 320, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
-    );
-    animation.onfinish = () => {
-      details.open = expanded;
-      details.style.overflow = '';
-      animation = null;
-    };
-  });
-  reducedMotion.addEventListener('change', () => {
-    if (animation) {
-      animation.cancel();
-      animation = null;
-      details.open = expanded;
-      details.style.overflow = '';
-    }
-  });
-});
-
 // This is a visual demo, including when Enter is pressed in an input.
 document.querySelector('.demo-form').addEventListener('submit', event => event.preventDefault());
 
@@ -74,3 +38,61 @@ if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-mot
   document.querySelectorAll('.reveal').forEach(element => observer.observe(element));
   document.documentElement.classList.add('motion-ready');
 }
+
+
+// Resolve semantic aliases through the browser so captions always match the theme.
+function updatePalette() {
+  const styles = getComputedStyle(document.documentElement);
+  document.querySelectorAll('.swatch').forEach(button => {
+    const raw = styles.getPropertyValue(button.dataset.token).trim();
+    const hex = raw.slice(0, 7).toUpperCase();
+    if (!/^#[0-9A-F]{6}$/.test(hex)) return;
+    const rgb = `rgb(${[1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16)).join(', ')})`;
+    button.dataset.hex = hex;
+    button.dataset.rgb = rgb;
+    button.querySelector('.swatch-hex').textContent = hex;
+    button.querySelector('.swatch-rgb').textContent = rgb;
+  });
+}
+let copyFormat = 'hex';
+let toastTimer;
+const toast = document.querySelector('.copy-toast');
+document.querySelectorAll('[data-format]').forEach(button => {
+  button.addEventListener('click', () => {
+    copyFormat = button.dataset.format;
+    document.querySelectorAll('[data-format]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+    document.querySelectorAll('.swatch').forEach(item => item.setAttribute('aria-label', `Copy ${item.querySelector('strong').textContent} ${copyFormat.toUpperCase()} color`));
+  });
+});
+async function copyColor(value) {
+  try {
+    if (!navigator.clipboard?.writeText) throw new Error('Clipboard API unavailable');
+    await navigator.clipboard.writeText(value);
+  } catch {
+    // Local file previews may not expose the modern clipboard API.
+    const previous = document.activeElement;
+    const field = document.createElement('textarea');
+    field.value = value;
+    field.style.cssText = 'position:fixed;left:-9999px;top:0';
+    document.body.append(field);
+    field.select();
+    let copied = false;
+    try { copied = document.execCommand('copy'); }
+    finally { field.remove(); previous?.focus({ preventScroll: true }); }
+    if (!copied) throw new Error('Clipboard unavailable');
+  }
+}
+document.querySelectorAll('.swatch').forEach(button => {
+  button.addEventListener('click', async () => {
+    const value = button.dataset[copyFormat];
+    try {
+      await copyColor(value);
+      toast.textContent = `${value} copied to clipboard`;
+    } catch {
+      toast.textContent = `Clipboard unavailable. Copy this value: ${value}`;
+    }
+    clearTimeout(toastTimer);
+    toast.classList.add('shown');
+    toastTimer = setTimeout(() => toast.classList.remove('shown'), 4000);
+  });
+});
